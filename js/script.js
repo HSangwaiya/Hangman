@@ -1,9 +1,15 @@
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded", async function(){
 
     //Words
-    let words = ["acknowledgement","complement","staid","consign","contusion","toad","trip","bible","bane","derivative","discomfit","vestige","maverick","neophyte","tangent",'dick',"pervert","duplicate","electric","emulate","exploit","foil","obstruct","fortune","aberration","abjure","victory","yawn","cogent","knell","knock","leverage","relegate","potential","cobbler","gratitude","gallop","heterogenous","identical","invoke","inoculate","insidious","sex","partnership","provoke","quilt","relegate","winsome","reproduce","wily","yoke","silly","bitch"];
-    let question_word = words[(Math.floor(Math.random() * words.length))];
 
+    //let words = ["acknowledgement","complement","staid","consign","contusion","toad","trip","bible","bane","derivative","discomfit","vestige","maverick","neophyte","tangent",'dick',"pervert","duplicate","electric","emulate","exploit","foil","obstruct","fortune","aberration","abjure","victory","yawn","cogent","knell","knock","leverage","relegate","potential","cobbler","gratitude","gallop","heterogenous","identical","invoke","inoculate","insidious","sex","partnership","provoke","quilt","relegate","winsome","reproduce","wily","yoke","silly","bitch"];
+    let question_word;
+    const wordData = await fetch('https://random-word-api.herokuapp.com/word');
+    const wordObj = await wordData.json();
+    question_word = wordObj[0];
+    //console.log(question_word);
+    //question_word = words[(Math.floor(Math.random() * words.length))];
+    //alert(question_word);
     let blanks = question_word.length;
     let question_map = new Map();
     for(let i = 0; i < blanks; i++){
@@ -88,31 +94,31 @@ document.addEventListener("DOMContentLoaded", function(){
             this.setAttribute('disabled', 'true');
             let image = document.getElementById('hangman-game');
             switch (image.getAttribute('src')) {
-                case "/images/initial.jpg":
-                    image.setAttribute('src', "/images/next1.jpg");
+                case "images/initial.jpg":
+                    image.setAttribute('src', "images/next1.jpg");
                     break;
-                case "/images/next1.jpg":
-                    image.setAttribute('src', "/images/next2.jpg");
+                case "images/next1.jpg":
+                    image.setAttribute('src', "images/next2.jpg");
                     break;
-                case "/images/next2.jpg":
-                    image.setAttribute('src', "/images/next3.jpg");
+                case "images/next2.jpg":
+                    image.setAttribute('src', "images/next3.jpg");
                     break;
-                case "/images/next3.jpg":
-                    image.setAttribute('src', "/images/next4.jpg");
+                case "images/next3.jpg":
+                    image.setAttribute('src', "images/next4.jpg");
                     break;
-                case "/images/next4.jpg":
-                    image.setAttribute('src', "/images/next5.jpg");
+                case "images/next4.jpg":
+                    image.setAttribute('src', "images/next5.jpg");
                     break;
-                case "/images/next5.jpg":
-                    image.setAttribute('src', "/images/next6.jpg");
+                case "images/next5.jpg":
+                    image.setAttribute('src', "images/next6.jpg");
                     break;
-                case "/images/next6.jpg":
-                    image.setAttribute('src', "/images/next7.jpg");
+                case "images/next6.jpg":
+                    image.setAttribute('src', "images/next7.jpg");
                     break;
-                case "/images/next7.jpg":
-                    image.setAttribute('src', "/images/lost.jpg");
+                case "images/next7.jpg":
+                    image.setAttribute('src', "images/lost.jpg");
                     document.getElementById('keyboard').setAttribute('hidden', 'true');
-                    word_element.innerHTML += "<br><br> Sorry! You lost."
+                    word_element.innerHTML = `<br><br><br>${question_word}<br><br> Sorry! You lost.`
                     break;
             }
         })
@@ -121,6 +127,6 @@ document.addEventListener("DOMContentLoaded", function(){
 
     //Play Again Button
     document.getElementById('play-button').onclick = () => {
-        window.location.href = "/index.html";
+        window.location.href = "index.html";
     }
 })
